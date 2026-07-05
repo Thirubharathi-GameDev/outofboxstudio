@@ -9,8 +9,10 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Sparks } from "@/components/ui/Sparks";
 import { Reveal } from "@/components/ui/Reveal";
 import { TextReveal } from "@/components/ui/TextReveal";
+import { useGameModal } from "@/components/game/GameModalContext";
 
 export function FeaturedGame() {
+  const { open } = useGameModal();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -45,17 +47,6 @@ export function FeaturedGame() {
               <Artwork palette={g.palette} seed={3} className="h-full w-full" />
             </motion.div>
           </motion.div>
-
-          {/* overlay fog drifting across the art */}
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-40 blur-2xl"
-            style={{
-              background: `radial-gradient(50% 60% at 30% 40%, ${g.accent}22, transparent 60%)`,
-            }}
-            animate={{ x: ["-6%", "6%", "-6%"], y: ["0%", "-4%", "0%"] }}
-            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-          />
 
           {/* floating particles */}
           <Sparks color={g.accent} count={16} />
@@ -103,7 +94,11 @@ export function FeaturedGame() {
                     <Play size={15} className="fill-current" />
                     Watch Trailer
                   </MagneticButton>
-                  <MagneticButton href="#games" variant="secondary" cursorLabel="More">
+                  <MagneticButton
+                    variant="secondary"
+                    cursorLabel="More"
+                    onClick={() => open(g)}
+                  >
                     Learn More
                     <ArrowUpRight size={15} />
                   </MagneticButton>

@@ -8,6 +8,7 @@ import { TiltCard } from "@/components/ui/TiltCard";
 import { Sparks } from "@/components/ui/Sparks";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { RevealGroup } from "@/components/ui/Reveal";
+import { useGameModal } from "@/components/game/GameModalContext";
 import { EASE_OUT_EXPO } from "@/lib/utils";
 
 export function OurGames() {
@@ -31,6 +32,7 @@ export function OurGames() {
 }
 
 function GameCard({ game, index }: { game: Game; index: number }) {
+  const { open } = useGameModal();
   const cardVariants = {
     hidden: { opacity: 0, y: 60, filter: "blur(12px)" },
     visible: {
@@ -44,7 +46,21 @@ function GameCard({ game, index }: { game: Game; index: number }) {
   return (
     <motion.div variants={cardVariants}>
       <TiltCard className="h-full">
-        <article className="relative h-full overflow-hidden rounded-3xl border border-line bg-card">
+        <article
+          onClick={() => open(game)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              open(game);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          data-cursor="hover"
+          data-cursor-label="Open"
+          aria-label={`View ${game.title} details`}
+          className="relative h-full cursor-pointer overflow-hidden rounded-3xl border border-line bg-card outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+        >
           {/* animated gradient border on hover */}
           <div
             aria-hidden
@@ -111,14 +127,12 @@ function GameCard({ game, index }: { game: Game; index: number }) {
                   </span>
                 ))}
               </div>
-              <a
-                href="#featured"
-                data-cursor="hover"
-                aria-label={`Learn more about ${game.title}`}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-primary hover:text-ink"
+              <span
+                aria-hidden
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors group-hover:border-primary group-hover:text-ink"
               >
                 <ArrowUpRight size={16} />
-              </a>
+              </span>
             </div>
           </div>
         </article>

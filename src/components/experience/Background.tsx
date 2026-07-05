@@ -113,14 +113,14 @@ export function Background() {
         };
       });
 
-      const dustCount = Math.min(34, Math.floor((width * height) / 60000));
+      const dustCount = Math.min(16, Math.floor((width * height) / 110000));
       dust = Array.from({ length: dustCount }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: Math.random() * 22 + 8,
-        vx: (Math.random() - 0.5) * 0.12,
-        vy: -(Math.random() * 0.1 + 0.02),
-        a: Math.random() * 0.05 + 0.015,
+        r: Math.random() * 10 + 4,
+        vx: (Math.random() - 0.5) * 0.1,
+        vy: -(Math.random() * 0.08 + 0.02),
+        a: Math.random() * 0.025 + 0.008,
       }));
     };
     resize();
@@ -185,41 +185,35 @@ export function Background() {
         }}
       />
 
-      {/* LAYER 2 — Nebula */}
+      {/* LAYER 2 — Nebula (subtle, crisp) */}
       <motion.div
         className="absolute -inset-[15%]"
         style={{ y: nebulaY, filter: nebulaFilter }}
       >
         <motion.div
-          className="absolute inset-0 opacity-70"
+          className="absolute inset-0 opacity-40"
           style={{
             backgroundImage:
-              "radial-gradient(38% 40% at 22% 28%, rgba(108,99,255,0.18), transparent 60%), radial-gradient(34% 36% at 78% 58%, rgba(0,229,255,0.13), transparent 60%), radial-gradient(30% 30% at 55% 85%, rgba(138,125,255,0.12), transparent 60%)",
+              "radial-gradient(34% 36% at 20% 26%, rgba(108,99,255,0.12), transparent 62%), radial-gradient(30% 32% at 80% 60%, rgba(0,229,255,0.09), transparent 62%)",
           }}
-          animate={reduced ? undefined : { scale: [1, 1.06, 1], opacity: [0.6, 0.8, 0.6] }}
+          animate={reduced ? undefined : { opacity: [0.32, 0.46, 0.32] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
 
-      {/* LAYER 4 — Fog (pointer parallax) */}
+      {/* LAYER 4 — Faint edge accent glows (crisp, no haze) */}
       <motion.div className="absolute inset-0" style={{ x: parX, y: fogY }}>
         <motion.div
-          className="absolute -top-40 left-[8%] h-[38rem] w-[38rem] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(108,99,255,0.16), transparent 62%)" }}
-          animate={reduced ? undefined : { x: [0, 40, 0], y: [0, 26, 0] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-32 -left-24 h-[26rem] w-[26rem] rounded-full blur-2xl"
+          style={{ background: "radial-gradient(circle, rgba(108,99,255,0.09), transparent 68%)", x: parX2, y: parY2 }}
+          animate={reduced ? undefined : { opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-1/3 right-[4%] h-[32rem] w-[32rem] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(0,229,255,0.12), transparent 62%)" }}
-          animate={reduced ? undefined : { x: [0, -36, 0], y: [0, -20, 0] }}
-          transition={{ duration: 48, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-1/3 h-[30rem] w-[30rem] rounded-full blur-3xl"
-          style={{ background: "radial-gradient(circle, rgba(138,125,255,0.10), transparent 62%)", x: parX2, y: parY2 }}
-          animate={reduced ? undefined : { x: [0, 30, 0] }}
-          transition={{ duration: 44, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-24 -right-24 h-[24rem] w-[24rem] rounded-full blur-2xl"
+          style={{ background: "radial-gradient(circle, rgba(0,229,255,0.07), transparent 68%)" }}
+          animate={reduced ? undefined : { opacity: [0.6, 0.9, 0.6] }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
         />
       </motion.div>
 
@@ -287,7 +281,7 @@ export function Background() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%)",
+            "radial-gradient(130% 130% at 50% 50%, transparent 62%, rgba(0,0,0,0.4) 100%)",
         }}
       />
     </div>

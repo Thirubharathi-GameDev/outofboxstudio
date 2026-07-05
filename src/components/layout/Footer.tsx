@@ -61,13 +61,16 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor="hover"
-                    className="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink"
+                    className="group inline-flex items-center gap-2 text-sm text-muted transition-all duration-300 hover:translate-x-0.5 hover:text-ink"
                   >
-                    <Icon size={15} />
+                    <Icon
+                      size={15}
+                      className="transition-transform duration-300 group-hover:scale-125 group-hover:text-secondary"
+                    />
                     {label}
                     <ArrowUpRight
                       size={12}
-                      className="opacity-0 transition-opacity group-hover:opacity-100"
+                      className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100"
                     />
                   </a>
                 ))}

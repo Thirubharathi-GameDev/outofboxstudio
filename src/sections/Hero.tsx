@@ -81,6 +81,20 @@ export function Hero() {
         style={{ y }}
         className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-6 text-center"
       >
+        {/* crisp depth halo behind the title (no haze) */}
+        {!reduced && (
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(108,99,255,0.16), rgba(0,229,255,0.05) 45%, transparent 70%)",
+            }}
+            animate={{ scale: [0.95, 1.05, 0.95], opacity: [0.6, 0.9, 0.6] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          />
+        )}
+
         <motion.div
           variants={container}
           initial="hidden"
@@ -101,13 +115,14 @@ export function Hero() {
               trigger="mount"
               play={show}
               delay={0.35}
-              className="block text-gradient"
+              gradient
+              className="block"
             />
             <CharReveal
               text="STUDIO"
               trigger="mount"
               play={show}
-              delay={0.75}
+              delay={0.7}
               className="block text-ink"
             />
           </h1>

@@ -20,6 +20,7 @@ export function CharReveal({
   once = true,
   trigger = "inView",
   play = true,
+  gradient = false,
 }: {
   text: string;
   className?: string;
@@ -28,6 +29,12 @@ export function CharReveal({
   once?: boolean;
   trigger?: "inView" | "mount";
   play?: boolean;
+  /**
+   * When true each glyph is filled with a vertical brand gradient. This is
+   * required because CSS `background-clip: text` cannot span nested per-char
+   * elements — so we clip the (uniform, top-to-bottom) gradient per character.
+   */
+  gradient?: boolean;
 }) {
   const words = text.split(" ");
 
@@ -66,6 +73,17 @@ export function CharReveal({
             <motion.span
               key={`${wi}-${ci}`}
               className="inline-block will-change-[transform,opacity,filter]"
+              style={
+                gradient
+                  ? {
+                      backgroundImage:
+                        "linear-gradient(180deg, #ffffff 0%, #d6d3ff 48%, #8c84ff 78%, #00e5ff 120%)",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      color: "transparent",
+                    }
+                  : undefined
+              }
               variants={char}
             >
               {c}

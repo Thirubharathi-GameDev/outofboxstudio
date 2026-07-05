@@ -10,6 +10,8 @@ import { ScrollProgress } from "./ScrollProgress";
 import { LightSweep } from "./LightSweep";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { GameModalProvider } from "@/components/game/GameModalContext";
+import { GameModal } from "@/components/game/GameModal";
 
 /**
  * Top-level client shell. Owns the intro-loader lifecycle, exposes the loading
@@ -36,13 +38,16 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
       <ScrollProgress />
       <LightSweep active={!isLoading} />
 
-      <SmoothScroll>
-        <div className="relative z-10 flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
-      </SmoothScroll>
+      <GameModalProvider>
+        <SmoothScroll>
+          <div className="relative z-10 flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </SmoothScroll>
+        <GameModal />
+      </GameModalProvider>
     </LoadingContext.Provider>
   );
 }

@@ -8,19 +8,25 @@ import { BehindScenes } from "@/sections/BehindScenes";
 import { Stats } from "@/sections/Stats";
 import { Devlogs } from "@/sections/Devlogs";
 import { Contact } from "@/sections/Contact";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <FeaturedGame />
+      <SectionDivider variant="diamond" />
       <About />
       <OurGames />
+      <SectionDivider />
       <Journey />
+      <SectionDivider variant="diamond" />
       <Process />
       <BehindScenes />
+      <SectionDivider />
       <Stats />
       <Devlogs />
+      <SectionDivider variant="diamond" />
       <Contact />
     </>
   );
