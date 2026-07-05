@@ -117,13 +117,13 @@ class SoundManagerImpl {
 
     switch (cue) {
       case "hover":
-        this.blip(1180, 0.028, 0.11, "triangle");
+        this.blip(1180, 0.05, 0.11, "triangle");
         break;
       case "click":
-        this.blip(320, 0.06, 0.18, "sine", 140);
+        this.blip(420, 0.1, 0.2, "triangle", 180);
         break;
       case "reveal":
-        this.blip(640, 0.03, 0.3, "sine", 760);
+        this.blip(640, 0.05, 0.3, "sine", 760);
         break;
       case "transition":
         this.sweep();
@@ -188,15 +188,17 @@ class SoundManagerImpl {
     this.ambientGain.gain.value = 0.5;
     const lowpass = ctx.createBiquadFilter();
     lowpass.type = "lowpass";
-    lowpass.frequency.value = 700;
+    lowpass.frequency.value = 1400;
     lowpass.Q.value = 0.6;
     this.ambientGain.connect(lowpass).connect(this.master);
 
-    // detuned drone voices (A1, E2, A2)
+    // detuned drone chord — pitched high enough to be audible on laptop
+    // speakers (A2 / E3 / A3 / C#4 shimmer) while still soft and cinematic.
     const voices: Array<{ freq: number; type: OscillatorType; level: number; detune: number }> = [
-      { freq: 55, type: "sine", level: 0.5, detune: -6 },
-      { freq: 82.41, type: "triangle", level: 0.28, detune: 4 },
-      { freq: 110, type: "sine", level: 0.16, detune: 8 },
+      { freq: 110, type: "sine", level: 0.5, detune: -6 },
+      { freq: 164.81, type: "triangle", level: 0.3, detune: 4 },
+      { freq: 220, type: "sine", level: 0.22, detune: 8 },
+      { freq: 277.18, type: "sine", level: 0.12, detune: -3 },
     ];
     for (const v of voices) {
       const osc = ctx.createOscillator();
@@ -214,7 +216,7 @@ class SoundManagerImpl {
     const lfo = ctx.createOscillator();
     lfo.frequency.value = 0.05;
     const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 260;
+    lfoGain.gain.value = 600;
     lfo.connect(lfoGain).connect(lowpass.frequency);
     lfo.start(now);
     this.ambientNodes.push(lfo);
